@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fetch Instagram Data</title>
+</head>
+
+<body>
+    <label for="instaLink">Enter Instagram URL:</label>
+    <input type="text" id="instaLink" placeholder="Paste Instagram URL here">
+    <button onclick="fetchData()">Fetch Instagram Data</button>
+    <div id="dataContainer">
+        <div id="dataTitle"></div>
+        <img id="dataImg" src="">
+        <p id="errorMsg"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.getElementById('instaLink').addEventListener('keyup',(event) => {
+            if (event.keyCode === 13) { // Enter key
+                fetchData();
+            }
+        });
+
+        axios.defaults.headers.post['Content-Type'] = 'application/json';
+        // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
+        const axiosInstance = axios.create({
+            baseURL: 'https://api.dev-supernova.thelionparcel.com/functions/v1/',
+            timeout: 20000
+        })
+
+        const request = (
+            url,
+            options
+        ) => {
+            return new Promise((resolve,reject) => {
+                axiosInstance({
+                    url,
+                    ...options
+                })
+                    .then((res) => {
+                        resolve(res.data)
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            })
+        }
+
+        const fetchData = async () => {
+            try {
+                const instaLink = document.getElementById('instaLink').value.trim();
+                if (instaLink === '') {
+                    console.error('Instagram URL is empty.');
+                    return;
+                }
+
+                const response = await request('/scrapping',{
+                    method: 'POST',
+                    data: {
+                        link: instaLink
+                    }
+                })
+
+                if (response.error) {
+                    const errorMsg = document.getElementById('errorMsg')
+                    errorMsg.innerHTML = response.error
+                    return
+                }      
+
+                // Update the HTML content with the fetched data
+                const dataTitle = document.getElementById('dataTitle');
+                dataTitle.innerHTML = response.title;
+
+                const dataImg = document.getElementById('dataImg');
+                dataImg.src = response.image
+
+            } catch (error) {
+                throw error
+            }
+        };
+    </script>
+</body>
+
+</html>
