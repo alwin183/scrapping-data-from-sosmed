@@ -68,7 +68,7 @@
                         id: id
                     }
                 })
-
+                console.log("res", response);
                 if (response.error) {
                     const errorMsg = document.getElementById('errorMsg')
                     errorMsg.innerHTML = response.error
@@ -77,10 +77,10 @@
 
                 // Update the HTML content with the fetched data
                 const dataTitle = document.getElementById('dataTitle');
-                dataTitle.innerHTML = response.data.description;
+                dataTitle.innerHTML = response?.data?.description;
 
                 const dataImg = document.getElementById('dataImg');
-                dataImg.src = response.data.imageUrl
+                dataImg.src = response?.data?.imageUrl
 
             } catch (error) {
                 throw error
