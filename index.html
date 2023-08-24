@@ -11,11 +11,17 @@
     <label for="id">Id:</label>
     <input type="text" id="id" placeholder="Paste Instagram URL here">
     <button onclick="fetchData()">Fetch Instagram Data</button>
-    <div id="dataContainer">
-        <div id="dataTitle"></div>
-        <img id="dataImg" src="">
-        <p id="errorMsg"></p>
-    </div>
+    <table style="margin-top: 10px;">
+        <tr style="margin: 0; padding: 0;">
+            <td>
+                <div style="display: flex; background-color: rgb(9, 49, 50); padding: 10px; border-radius: 8px; color: aliceblue; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                    <img id="dataImg" width="300"
+                        src="">
+                    <div id="dataTitle" style="padding-left: 10px; width: 600px;"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -68,7 +74,7 @@
                         id: id
                     }
                 })
-                console.log("res", response);
+                console.log("res",response);
                 if (response.error) {
                     const errorMsg = document.getElementById('errorMsg')
                     errorMsg.innerHTML = response.error
