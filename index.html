@@ -8,6 +8,8 @@
 <body>
     <label for="instaLink">Enter Instagram URL:</label>
     <input type="text" id="instaLink" placeholder="Paste Instagram URL here">
+    <label for="id">Id:</label>
+    <input type="text" id="id" placeholder="Paste Instagram URL here">
     <button onclick="fetchData()">Fetch Instagram Data</button>
     <div id="dataContainer">
         <div id="dataTitle"></div>
@@ -52,6 +54,8 @@
         const fetchData = async () => {
             try {
                 const instaLink = document.getElementById('instaLink').value.trim();
+                const id = document.getElementById('id').value.trim();
+
                 if (instaLink === '') {
                     console.error('Instagram URL is empty.');
                     return;
@@ -60,7 +64,8 @@
                 const response = await request('/facebook-graph',{
                     method: 'POST',
                     data: {
-                        link: instaLink
+                        link: instaLink,
+                        id: id
                     }
                 })
 
@@ -68,7 +73,7 @@
                     const errorMsg = document.getElementById('errorMsg')
                     errorMsg.innerHTML = response.error
                     return
-                }      
+                }
 
                 // Update the HTML content with the fetched data
                 const dataTitle = document.getElementById('dataTitle');
