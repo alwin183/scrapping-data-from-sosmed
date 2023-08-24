@@ -72,10 +72,10 @@
 
                 // Update the HTML content with the fetched data
                 const dataTitle = document.getElementById('dataTitle');
-                dataTitle.innerHTML = response.title;
+                dataTitle.innerHTML = response.description;
 
                 const dataImg = document.getElementById('dataImg');
-                dataImg.src = response.image
+                dataImg.src = response.imageUrl
 
             } catch (error) {
                 throw error
